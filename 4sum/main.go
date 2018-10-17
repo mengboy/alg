@@ -7,10 +7,38 @@ import (
 
 func main() {
 	nums := []int{
-		1, 0, -1, 0, -2, 2,
+		-3,-2,-1,0,0,1,2,3,
 	}
 
-	fmt.Println(fourSum(nums, 0))
+	fmt.Println(fourSum2(nums, 0))
+}
+
+// 需要去从
+func fourSum2(nums []int, target int) [][]int {
+	if len(nums) < 4{
+		return nil
+	}
+	sort.Ints(nums)
+	result := make([][]int, 0)
+	for i := 0; i < len(nums); i++{
+		for j := i + 1; j < len(nums); j++{
+			l := j + 1
+			r := len(nums) - 1
+			for l < r{
+				if target == nums[i] + nums[j] + nums[l] + nums[r]{
+					result = append(result, []int{
+						nums[i], nums[j], nums[l], nums[r],
+					})
+					r--
+				}else if target > nums[i] + nums[j] + nums[l] + nums[r] {
+					l++
+				}else {
+					r--
+				}
+			}
+		}
+	}
+	return result
 }
 
 func fourSum(nums []int, target int) [][]int {

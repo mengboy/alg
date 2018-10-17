@@ -1,6 +1,6 @@
 package queue
 
-import "leetcode-alg/data-structure/list"
+import "alg/data-structure/list"
 
 // 先进先出
 // list 尾插入

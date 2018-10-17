@@ -2,7 +2,7 @@ package tree
 
 import (
 	"fmt"
-	"leetcode-alg/data-structure/queue"
+	"alg/data-structure/queue"
 )
 
 type TreeNode struct {
@@ -43,6 +43,7 @@ func (tree Tree) LayerOut() {
 func (tree Tree) Search(v int64) *TreeNode {
 	return tree.Root.search(v)
 }
+
 
 // 递归插入
 func (node *TreeNode) Insert(v int64) {
@@ -199,4 +200,88 @@ func (node *TreeNode) Out() {
 	fmt.Print(node.Val, " ")
 	node.Left.Out()
 	node.Right.Out()
+}
+
+// 中序
+func (node *TreeNode) InOrder()  {
+	if node == nil {
+		return
+	}
+	node.Left.InOrder()
+	fmt.Print(node.Val, " ")
+	node.Right.InOrder()
+}
+
+func (node *TreeNode) PostOrder()  {
+	if node == nil {
+		return
+	}
+	node.Left.PostOrder()
+	node.Right.PostOrder()
+	fmt.Print(node.Val, " ")
+}
+
+
+// 根据前序、后序恢复二叉树
+func Revert(preOrder []int64, inOrder []int64) *TreeNode {
+	//
+	root := revert(preOrder, 0, int64(len(preOrder)) - 1, inOrder, 0, int64(len(inOrder)) - 1)
+	return root
+}
+
+// 隐含条件如果start == end 直接返回节点
+func revert(preOrder []int64, preStart, preEnd int64, inOrder []int64, inStart, inEnd int64) *TreeNode {
+	if len(preOrder) != len(inOrder){
+		return nil
+	}
+	if preStart > preEnd || inStart > inEnd {
+		return nil
+	}
+
+
+	rootV := preOrder[preStart]
+
+	root := &TreeNode{
+		Val:rootV,
+	}
+
+	var i int64
+	for i = inStart; i < inEnd; i++{
+		if inOrder[i] == rootV{
+			root.Left = revert(preOrder, preStart + 1, preStart + i - inStart, inOrder, inStart, i - 1)
+			root.Right = revert(preOrder, preStart+i-inStart+1, preEnd, inOrder, i + 1, inEnd)
+		}
+	}
+	return root
+}
+
+func RevertPostIn(postOrder []int64, inOrder []int64) *TreeNode{
+	l := int64(len(postOrder)) - 1
+	root := revertPostIn(postOrder, 0, l, inOrder, 0, l)
+	return root
+}
+
+func revertPostIn(postOrder []int64, postStart, postEnd int64, inOrder []int64, inStart, inEnd int64) *TreeNode {
+	if len(postOrder) != len(inOrder){
+		return nil
+	}
+	if postStart > postEnd || inStart > inEnd {
+		return nil
+	}
+	rootV := postOrder[postEnd]
+	root := &TreeNode{
+		Val:rootV,
+	}
+	var i int64
+	// 根据移动的位数确定边界，而不是根据i的值
+	for i = inStart; i < inEnd; i++{
+		if inOrder[i] == rootV{
+			// postStart+i-inStart-1  （i-inStart 遍历移动的位数， postStart 加上移动的位数 - 1）
+			// 2 3 4 5 7 / 10/ 15 16 20 21   i = 5  i-inStart = 5 （2 -- 10）
+			// 2 4 3 7 5 / 15 21 20 16 10    取（2 -- 7）所以要减1
+			root.Left = revertPostIn(postOrder, postStart, postStart+i-inStart-1, inOrder, inStart, i - 1)
+			root.Right = revertPostIn(postOrder, postStart+i-inStart, postEnd - 1, inOrder, i + 1, inEnd)
+		}
+	}
+	return root
 }

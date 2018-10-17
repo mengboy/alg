@@ -91,21 +91,18 @@ func (list *List) ReverseList() {
 		return
 	}
 
-	first := list.Node.Next
-	next := list.Node.Next.Next
+	first := list.Next
+	next := list.Next.Next
 	list.Next.Next = nil
 	for next != nil {
-		// 3
+		// 获取将要插入节点的下一个节点
 		nextNext := next.Next
 		// 头插法
 		next.Next = first
+		// 更新头节点
 		first = next
+		// 更新下一个要插入的节点
 		next = nextNext
-		t := &List{
-			*first,
-			4,
-		}
-		t.Out()
 	}
 	list.Next = first
 }
@@ -141,4 +138,35 @@ func (list *List) Out() {
 	}
 	fmt.Println()
 
+}
+
+func  Reverse2(head *Node) *Node {
+	if head == nil || head.Next == nil{
+		return head
+	}else {
+		newHead := Reverse2(head.Next)
+		head.Next.Next = head
+		head.Next = nil
+		return newHead
+	}
+}
+
+func (l *List) Reverse()  {
+	if l == nil || l.Next == nil || l.Next.Next == nil{
+		return
+	}
+	first := l.Next
+	next := l.Next.Next
+	l.Next.Next = nil
+
+	for next != nil{
+		nextNext := next.Next
+
+		next.Next = first
+
+		first = next
+
+		next = nextNext
+	}
+	l.Next = first
 }

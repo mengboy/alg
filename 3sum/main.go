@@ -24,7 +24,36 @@ func main() {
 	//	-1, -1, 0,
 	//}
 
-	fmt.Println(threeSum2(nums))
+	//fmt.Println(threeSum2(nums))
+	fmt.Println(threeSum3(nums, 0))
+}
+
+
+// 数组中三个数和为某个值
+// 固定一个数，查找另外两个数
+func threeSum3(nums []int, target int) [][]int {
+	if len(nums) < 3{
+		return nil
+	}
+	sort.Ints(nums)
+	result := make([][]int, 0)
+	for i := 0; i < len(nums); i++{
+		l := i + 1
+		r := len(nums) - 1
+		for l < r{
+			if target == nums[i] + nums[l] + nums[r]{
+				result = append(result, []int{
+					nums[i], nums[l], nums[r],
+				})
+				r--
+			}else if target > nums[i] + nums[l] + nums[r]{
+				l++
+			}else {
+				r--
+			}
+		}
+	}
+	return result
 }
 
 func threeSum(nums []int) [][]int {

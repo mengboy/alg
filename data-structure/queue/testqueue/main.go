@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"leetcode-alg/data-structure/queue"
+	"alg/data-structure/queue"
 )
 
 func main() {

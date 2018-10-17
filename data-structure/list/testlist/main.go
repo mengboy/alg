@@ -1,7 +1,7 @@
 package main
 
 import (
-	"leetcode-alg/data-structure/list"
+	"alg/data-structure/list"
 )
 
 type Node struct {
@@ -72,10 +72,14 @@ func main() {
 		Val:  5,
 		Next: nil,
 	})
-	n.Out()
+	//n.Out()
 
 	//n.Next.Next.Next.Next.Next = n.Next
 	//fmt.Println(n.IsRing())
-	//n.ReverseList()
+	//n.Reverse()
 	//n.Out()
+	h := list.Reverse2(n.Next)
+	n.Node.Next = h
+	n.Out()
+
 }
