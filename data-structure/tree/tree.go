@@ -1,6 +1,7 @@
 package tree
 
 import (
+	"alg/data-structure/stack"
 	"fmt"
 	"alg/data-structure/queue"
 )
@@ -165,14 +166,18 @@ func (node *TreeNode) layerOut() {
 	q := queue.New()
 	q.Push(node)
 	for !q.Empty() {
-		n := q.Pop().(*TreeNode)
-		fmt.Print(n.Val, " ")
-		if n.Left != nil {
-			q.Push(n.Left)
+		l := q.Len()
+		for ; l > 0; l--{
+			n := q.Pop().(*TreeNode)
+			fmt.Print(n.Val, " ")
+			if n.Left != nil {
+				q.Push(n.Left)
+			}
+			if n.Right != nil {
+				q.Push(n.Right)
+			}
 		}
-		if n.Right != nil {
-			q.Push(n.Right)
-		}
+		fmt.Println()
 	}
 }
 
@@ -212,6 +217,7 @@ func (node *TreeNode) InOrder()  {
 	node.Right.InOrder()
 }
 
+// Recursive
 func (node *TreeNode) PostOrder()  {
 	if node == nil {
 		return
@@ -220,6 +226,80 @@ func (node *TreeNode) PostOrder()  {
 	node.Right.PostOrder()
 	fmt.Print(node.Val, " ")
 }
+
+// 非递归后序， 遍历
+func (node *TreeNode) PreOrder2()  {
+	s := stack.New()
+	for node != nil || !s.Empty(){
+		// 输出根节点和所有左子节点
+		for node != nil{
+			fmt.Print(node.Val, " ")
+			s.Push(node)
+			node = node.Left
+		}
+		if !s.Empty(){
+			node = s.Pop().(*TreeNode)
+			node = node.Right
+		}
+	}
+}
+
+//  非递归中序遍历
+func (node *TreeNode) InOrder2()  {
+	s := stack.New()
+	for node != nil || !s.Empty(){
+		for node != nil{
+			s.Push(node)
+			node = node.Left
+		}
+		if !s.Empty(){
+			node = s.Pop().(*TreeNode)
+			fmt.Print(node.Val, " ")
+			node = node.Right
+		}
+	}
+}
+
+func (node *TreeNode) PostOrder2()  {
+	s := stack.New()
+	var pre, curr *TreeNode
+	s.Push(node)
+	for !s.Empty()  {
+		// 获取当前节点
+		curr = s.Peek().(*TreeNode)
+		// 当前节点无子节点，或者当前节点的子节点已经访问过
+		if curr.Left == nil && curr.Right == nil || (pre != nil && (pre == curr.Right || pre == curr.Left)){
+			fmt.Print(curr.Val, " ")
+			s.Pop()
+			pre = curr
+		}else {
+			// 将右子节点和左子节点分别入栈
+			if curr.Right != nil{
+				s.Push(curr.Right)
+			}
+			if curr.Left != nil{
+				s.Push(curr.Left)
+			}
+		}
+	}
+}
+
+// 非递归乱序
+func (node *TreeNode) Out2()  {
+	s := stack.New()
+	for node != nil || !s.Empty(){
+		for node != nil{
+			s.Push(node)
+			node = node.Right
+		}
+		if !s.Empty(){
+			node = s.Pop().(*TreeNode)
+			fmt.Print(node.Val, " ")
+			node = node.Left
+		}
+	}
+}
+
 
 
 // 根据前序、后序恢复二叉树
@@ -245,6 +325,7 @@ func revert(preOrder []int64, preStart, preEnd int64, inOrder []int64, inStart, 
 		Val:rootV,
 	}
 
+	// 根据移动的位数确定边界，而不是根据i的值
 	var i int64
 	for i = inStart; i < inEnd; i++{
 		if inOrder[i] == rootV{
