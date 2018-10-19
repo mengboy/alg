@@ -17,15 +17,22 @@ func main() {
 	t.Insert(15)
 	t.Insert(4)
 
+	t.LayerOut()
 
 	//t.LayerOut()
 	//fmt.Println()
 	//t.Del(5)
 	t.Root.Out()
 	fmt.Println()
+	t.Root.PreOrder2()
+	fmt.Println()
 	t.Root.InOrder()
 	fmt.Println()
+	t.Root.InOrder2()
+	fmt.Println()
 	t.Root.PostOrder()
+	fmt.Println()
+	t.Root.PostOrder2()
 	fmt.Println()
 
 	preOrder := []int64{

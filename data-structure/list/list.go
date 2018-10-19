@@ -30,7 +30,15 @@ func (list *List) DelFirst() *Node {
 	}
 	n := list.Next
 	list.Next = list.Next.Next
+	list.Length--
 	return n
+}
+
+func (list *List) GetFirst() *Node  {
+	if list.Next == nil{
+		return nil
+	}
+	return list.Next
 }
 
 func (list *List) Init() *List {
@@ -56,6 +64,7 @@ func (list *List) InsertTail(n *Node) {
 	// list本身0节点
 	if headNext == nil {
 		list.Node.Next = n
+		list.Length++
 		return
 	}
 	for headNext.Next != nil {

@@ -13,19 +13,22 @@ func main() {
 			Val: 2,
 			Next: &ListNode{
 				Val: 3,
-				Next: &ListNode{
-					Val:  4,
-					Next: nil,
-				},
+				Next: nil,
 			},
 		},
 	}
 
-	res := swapPairs(&list)
+	//res := swapPairs(&list)
 
-	for res != nil {
-		fmt.Println(res.Val)
-		res = res.Next
+	//for res != nil {
+	//	fmt.Println(res.Val)
+	//	res = res.Next
+	//}
+
+	res2 := swapList(&list)
+	for res2 != nil {
+		fmt.Println(res2.Val)
+		res2 = res2.Next
 	}
 }
 
@@ -61,6 +64,35 @@ func swapPairs(head *ListNode) *ListNode {
 
 		// 1
 		pre = curr
+	}
+	return newHead.Next
+}
+
+func swapList(head *ListNode) *ListNode {
+	// 节点数小于2，直接返回
+	if head == nil || head.Next == nil{
+		return head
+	}
+	newHead := &ListNode{
+	}
+	newHead.Next = head
+	pre := newHead
+	// 但前节点
+	curr := head
+	for curr != nil && curr.Next != nil{
+		// 当前节点的下一节点
+		next := curr.Next
+		// 下下一个节点
+		nextNext := curr.Next.Next
+		// 交换当前节点和当前节点的下一节点
+		pre.Next = next
+		pre.Next.Next = curr
+		// 更新下次交换的当前节点的前置节点
+		pre = pre.Next.Next
+		// 更新当前节点下一节点
+		curr.Next = nextNext
+		// 更新当前节点
+		curr = curr.Next
 	}
 	return newHead.Next
 }
