@@ -1,8 +1,11 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
+
+/**
+* 链表插入排序
+* 新建一个链表，将原链表进行插入
+ */
 
 func main()  {
 	list := &ListNode{

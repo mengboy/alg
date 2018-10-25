@@ -74,9 +74,12 @@ func backpack(W int, w[]int, v []int) (int, []bool) {
 
 	for i := 0; i < N; i++{
 		for j := 0; j <= W; j++{
+			// 当前元素重量大于背包容纳量
 			if (w[i] > j){
+				// 设置前i种商品最大值和前i-1种商品最大值一样
 				dp[i + 1][j] = dp[i][j]
 			}else {
+				//
 				dp[i + 1][j] = int(math.Max(float64(dp[i][j]), float64(dp[i][j - w[i]] + v[i])))
 				matrix[i][j] = (dp[i][j - w[i]] + v[i] > dp[i][j])
 			}

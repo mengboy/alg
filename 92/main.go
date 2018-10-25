@@ -1,10 +1,10 @@
 package main
 
-import (
-	. "alg/util"
-	)
+import ."alg/util"
 
-
+/**
+* 两两反转链表
+ */
 
 func main()  {
 	list := &ListNode{

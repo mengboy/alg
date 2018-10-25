@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+/**
+* 链表从k处循环
+ */
+
 func main()  {
 	list := ListNode{
 		Val: 0,

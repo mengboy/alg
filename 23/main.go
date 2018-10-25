@@ -5,6 +5,10 @@ import (
 	"math"
 )
 
+/**
+* 合并有序链表
+ */
+
 func main(){
 	list1 := &ListNode{
 		Val:1,

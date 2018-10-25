@@ -175,3 +175,30 @@ func quickNo(arr []int, l, r int, k int)  {
 		s.Push(end)
 	}
 }
+
+func partition3(arr []int, left, right int) int{
+	mid := arr[left]
+	i, j := left, right
+	for i < j {
+		// 从右边找到比mid小的数
+		for ; i < j && arr[j] <= mid; j--  {
+		}
+		arr[i] = arr[j]
+		// 从左边找到比mid大的数
+		for ; i < j && arr[i] > mid; i++{
+		}
+		arr[j] = arr[i]
+	}
+	// 恢复
+	arr[i] = mid
+	return i
+}
+
+func quick3(arr []int, l, r int)  {
+	if len(arr) <= 1{
+		return
+	}
+	i := partition3(arr, l, r)
+	quick3(arr, l, i)
+	quick3(arr, i + 1, l)
+}

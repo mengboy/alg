@@ -82,3 +82,34 @@ func HeapSort2(arr []int)  {
 		heap(arr, 0, i - 1)
 	}
 }
+
+func heapfiy3(arr []int, p, end int)  {
+	l := p * 2 + 1
+	if l > end{
+		return
+	}
+	r := p * 2 + 2
+	n := l
+	if r <= end && arr[n] > arr[r]{
+		n = r
+	}
+
+	if arr[p] < arr[n]{
+		return
+	}
+
+	arr[p], arr[n] = arr[n], arr[p]
+	heapfiy3(arr, n, end)
+}
+
+func heap3(arr []int)  {
+	len := len(arr)
+	m := len / 2
+	for i := m; i >= 0; i--{
+		heapfiy3(arr, i, len-1)
+	}
+	for i := len - 1; i >= 0; i--{
+		arr[0], arr[i] = arr[i], arr[0]
+		heapfiy(arr, 0, i)
+	}
+}
