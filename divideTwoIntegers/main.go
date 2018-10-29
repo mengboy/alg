@@ -5,6 +5,12 @@ import (
 	"math"
 )
 
+
+/**
+* 两数相除
+* 29
+ */
+
 /**
 * 需要优化
  */
@@ -83,4 +89,22 @@ func divide(dividend int, divisor int) int {
 	} else {
 		return -i
 	}
+}
+
+func divide2(dividend int, divisor int) int{
+	sub := dividend
+	res := 0
+
+	for sub >= divisor{
+		tmp := divisor
+		i := 1
+		for sub > tmp  {
+			sub = sub - tmp
+			res += i
+			// 通过移位增加位数
+			i = i << 1
+			tmp = tmp << 1
+		}
+	}
+	return res
 }

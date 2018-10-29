@@ -85,8 +85,6 @@ func backpack(W int, w[]int, v []int) (int, []bool) {
 			}
 		}
 	}
-
-
 	var j int
 	j = W
 	for i := N - 1; i >= 0; i-- {

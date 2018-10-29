@@ -12,9 +12,9 @@ func main()  {
 	arr := []int{
 		2, 3, 4, 4, 6, 8,
 	}
-	i1, i2 := result2(arr, 8)
+	//i1, i2 := result2(arr, 8)
 
-	fmt.Println(i1, i2)
+	//fmt.Println(i1, i2)
 }
 
 // x1 + x2 = target
@@ -22,16 +22,16 @@ func main()  {
 // 使用map保存数组元素和索引
 // 拿空间换时间
 
-func result(arr []int, target int) (int, int)  {
+func result(arr []int, target int) []int  {
 	_map := make(map[int]int)
 	for i, v := range arr{
 		if index, ok := _map[target - v]; ok{
-			return i, index
+			return []int{i, index}
 		}else {
 			_map[v] = i
 		}
 	}
-	return -1, -1
+	return []int{-1, -1}
 }
 
 
@@ -39,11 +39,13 @@ func result(arr []int, target int) (int, int)  {
 // 拿时间换空间
 // 对原素组排序，排序后使用双指针
 
-func result2(arr []int, target int) (int, int)  {
+func result2(arr []int, target int)  []int {
 	sort.Ints(arr)
 	for i, j := 0, len(arr) - 1; i < j; {
 		if arr[i] + arr[j] == target{
-			return i, j
+			return []int{
+				i, j,
+			}
 		}else {
 			if arr[i] + arr[j] > target{
 				j--
@@ -52,5 +54,9 @@ func result2(arr []int, target int) (int, int)  {
 			}
 		}
 	}
-	return -1, -1
+	return []int{
+		-1, -1,
+	}
 }
+
+

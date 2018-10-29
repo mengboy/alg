@@ -2,6 +2,9 @@ package main
 
 import "math"
 
+/**
+* 最短路径和
+ */
 func minpathsum(grid [][]int) int{
 	r := len(grid)
 	c := len(grid[0])
